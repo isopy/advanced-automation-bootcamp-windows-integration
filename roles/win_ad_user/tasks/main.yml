@@ -1,0 +1,18 @@
+---
+- name: create AD groups
+  win_domain_group:
+    name: "{{ item.value.group_name }}"
+    scope: "{{ item.value.group_scope }}"
+    state: present
+  with_dict: "{{ user_info }}"
+
+- name: create AD users
+  win_domain_user:
+    name: "{{ item.key }}"
+    firstname: "{{ item.value.firstname }}"
+    surname: "{{ item.value.surname }}"
+    password: "{{ item.value.password }}"
+    state: present
+    groups: 
+      - "{{ item.value.group_name }}"
+  with_dict: "{{ user_info }}"

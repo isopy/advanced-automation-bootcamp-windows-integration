@@ -1,0 +1,8 @@
+---
+- name: configure win services
+  hosts: windows
+  become: false
+  gather_facts: false
+
+  roles:
+    - win_service_config

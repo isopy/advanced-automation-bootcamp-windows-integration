@@ -1,0 +1,21 @@
+---
+- name: install packages using win_choclatey
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+    params: "{{ parameters }}"
+  loop: "{{ package_name }}"
+
+- name: start {{ service_name }}
+  win_service:
+    name: "{{ service_name }}"
+    state: started
+
+- name: create firewall rule for SSHD
+  win_firewall_rule:
+    name: SSHD
+    action: allow
+    protocol: "{{ protocol_name }}"
+    direction: in
+    state: present
+    enabled: yes
